@@ -3,15 +3,21 @@
   "version": "1.0.0",
   "description": "An event scheduling application for easy appointment management",
   "main": "index.js",
-  "repository": "https://github.com/hatchways/team-yugioh.git",
-  "author": "alvy <alvyjudy@gmail.com>",
+  "repository": "https://github.com/WhoaNellie/calendy.git",
   "license": "MIT",
   "private": true,
-  "workspaces":[
-    "client", "server"
+  "engines": {
+    "node": "v14.17.5"
+  },
+  "workspaces": [
+    "client",
+    "server"
   ],
-  "scripts":{
-    "build":"yarn workspace client run build",
-    "start":"yarn workspace server run start"
+  "scripts": {
+    "build": "yarn workspace client run build",
+    "start": "yarn workspace server run start"
+  },
+  "dependencies": {
+    "client": "file:client"
   }
 }

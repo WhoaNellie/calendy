@@ -10,7 +10,11 @@ const db = require("../db/models");
 const mongoose = require("mongoose");
 
 // Set the region
-AWS.config.update({ region: process.env.AWS_REGION });
+AWS.config.update({
+  region: process.env.AWS_REGION,
+  accessKeyId: process.env.AWS_IAM_USER_KEY,
+  secretAccessKey: process.env.AWS_IAM_USER_SECRET,
+});
 
 const BUCKET = process.env.AWS_BUCKET_NAME;
 

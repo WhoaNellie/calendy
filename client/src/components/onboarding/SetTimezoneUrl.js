@@ -42,18 +42,22 @@ const allTimezone = [
 const SetTimezoneUrl = (props) => {
   const classes = useStyles();
 
-  const { url, setUrl, timezone, setTimezone } = props;
+  const { url, setUrl, timezone, setTimezone, isDemo } = props;
 
   const [unique, setUnique] = useState(true);
 
-  const checkUnique = async linkVal => {
-    try {
-      const response = await axios.get(`/api/user/is_unique?URL=${linkVal}`);
-      if (response.status === 200);
+  const checkUnique = async (linkVal) => {
+    if (isDemo) {
       setUnique(true);
-    } catch (err) {
-      console.log(err);
-      setUnique(false);
+    } else {
+      try {
+        const response = await axios.get(`/api/user/is_unique?URL=${linkVal}`);
+        if (response.status === 200);
+        setUnique(true);
+      } catch (err) {
+        console.log(err);
+        setUnique(false);
+      }
     }
   };
 
@@ -269,8 +273,8 @@ const useStyles = makeStyles(theme => ({
 SetTimezoneUrl.propTypes = {
   url: PropTypes.string,
   setUrl: PropTypes.func,
-  timezone: PropTypes.string,
-  setTimezone: PropTypes.func
+  timezone: PropTypes.number,
+  setTimezone: PropTypes.func,
 };
 
 export default SetTimezoneUrl;

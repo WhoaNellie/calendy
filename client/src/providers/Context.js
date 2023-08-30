@@ -87,13 +87,35 @@ export const UserContextProvider = ({ children }) => {
   const [dataLoading, setDataLoading] = useState(true);
   const [teamEvents, setTeamEvents]= useState([]);
   const [teamData, setTeamData]= useState({});
+  const [isDemo, setIsDemo] = useState(false);
+
+  useEffect(() => {
+    if (isDemo) {
+      setAuthenticated("demo");
+      setUserData({
+        name: "Demo User",
+        email: "DemoUser@calendapp.com",
+        photoUrl:
+          "https://raw.githubusercontent.com/WhoaNellie/calendy/dev/client/src/assets/yay.png",
+        timezone: "UTC-1",
+        URL: "demo",
+        subscribed: false,
+        isAdmin: false,
+        demo: true,
+      });
+      setAuthLoading(false);
+      setDataLoading(false);
+      setTeamData({});
+      setTeamEvents([]);
+    }
+  }, [isDemo]);
 
   // Gets User Data from DB
   useEffect(() => {
-    if (authenticated) {
+    if (authenticated === true) {
       axios
         .get("/api/user/data")
-        .then(res => {
+        .then((res) => {
           setUserData(res.data);
           setDataLoading(false);
         })
@@ -128,7 +150,9 @@ export const UserContextProvider = ({ children }) => {
         teamData,
         setTeamData,
         teamEvents,
-        setTeamEvents
+        setTeamEvents,
+        isDemo,
+        setIsDemo,
       }}
     >
       {children}

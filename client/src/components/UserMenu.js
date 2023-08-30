@@ -25,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
     color: "black",
     cursor: "pointer",
     fontWeight: "bold",
+    marginLeft: 16,
+    whiteSpace: "nowrap",
   },
   Menu: {
     marginLeft: 25,

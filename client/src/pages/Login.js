@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -13,7 +13,7 @@ import { Button } from "@material-ui/core";
 import { emailExists } from "../utils/googleAuth";
 import axios from "axios";
 
-import { useSetAuthenticated } from "../providers/Context";
+import { useSetAuthenticated, UserContext } from "../providers/Context";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,6 +78,7 @@ const LogInPage = () => {
   const [emailError, setEmailError] = useState(false);
   const history = useHistory();
   const setAuthenticated = useSetAuthenticated();
+  const { setIsDemo } = useContext(UserContext);
 
   const handleClick = async (event) => {
     event.preventDefault();
@@ -98,7 +99,7 @@ const LogInPage = () => {
     setEmail(event.target.value);
   };
 
-  const registerDemoAccount = () => {
+  const _registerDemoAccount = () => {
     const email = "demo" + Date.now() + "@mail.com";
     const password = Date.now().toString();
     const name = "demo user" + Date.now();
@@ -108,6 +109,11 @@ const LogInPage = () => {
         setAuthenticated(true);
         history.push("/onboarding");
       });
+  };
+
+  const demoNoAuth = () => {
+    setIsDemo(true);
+    history.push("/onboarding");
   };
 
   return (
@@ -173,7 +179,7 @@ const LogInPage = () => {
                 color="primary"
                 type="button"
                 onClick={() => {
-                  registerDemoAccount();
+                  demoNoAuth();
                 }}
               >
                 Want a demo tour?

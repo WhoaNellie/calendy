@@ -133,6 +133,17 @@ router.get("/api/authentication/checkemail", async (req, res) => {
 
 // Route to sign up with email and password
 router.post("/api/authentication/sign-up", async (req, res) => {
+  if (req.body.demo) {
+    const jwtToken = jwt.create(
+      { userId: 999999, email: "calendappdemo@gmail.com" },
+      process.env.JWT_SECRET
+    );
+    jwtToken.setExpiration(new Date().getTime() + 24 * 60 * 60 * 1000);
+    const jwtCompact = jwtToken.compact();
+    res.cookie("app_auth_token", jwtCompact, { httpOnly: true });
+    res.status(200).send(jwtCompact);
+    return;
+  }
   // check the presence of required parameters
   const { email, password, name } = req.body;
   if (!email || !password || !name) {
